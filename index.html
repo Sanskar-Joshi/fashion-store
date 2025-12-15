@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sanskar Fashion</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link
+      rel="shortcut icon"
+      href="https://cdn-icons-png.flaticon.com/512/2965/2965250.png"
+      type="image/x-icon"
+    />
+  </head>
+  <body>
+    <!-- header -->
+    <header class="header">
+      <nav class="nav">
+        <div class="logo">Sanskar Fashion</div>
+        <button class="hamburger" onclick="toggleMobileMenu()">
+          <i class="fas fa-bars"></i>
+        </button>
+        <ul class="nav-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#products">Products</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <button class="cart-btn" onclick="toggleCart()">
+            <i class="fas fa-shopping-cart"></i>Cart
+            <span class="cart-count" id="cartCount">0</span>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <div class="hero-bg"></div>
+      <div class="hero-content">
+        <h1>Premium Fashion</h1>
+        <p>
+          Discover timeless pieces that define your unique style and elevate
+          your wardrobe
+        </p>
+        <a href="#products" class="cta-btn">Shop Collection</a>
+      </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="products">
+      <div class="section-title">
+        <h2>Featured Collection</h2>
+        <p>Curated pieces for the modern wardrobe</p>
+      </div>
+
+      <div class="filters">
+        <button class="filter-btn active" onclick="filterProducts('all')">
+          All Items
+        </button>
+
+        <button class="filter-btn" onclick="filterProducts('men')">
+          Men's
+        </button>
+
+        <button class="filter-btn" onclick="filterProducts('women')">
+          Women's
+        </button>
+
+        <button class="filter-btn" onclick="filterProducts('accessories')">
+          Accessories
+        </button>
+      </div>
+
+      <div class="product-grid" id="productGrid">
+        <!-- Products will be appended here -->
+      </div>
+    </section>
+
+    <!-- Cart Modal -->
+    <div class="cart-modal" id="cartModal">
+      <div class="cart-content">
+        <div class="cart-header">
+          <h3><i class="fas fa-shopping-bag"></i> Shopping Cart</h3>
+          <button class="close-cart" onclick="toggleCart()">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+
+        <div id="cartItems">
+          <div class="empty-cart">
+            <div class="empty-cart-icon">
+              <i class="fas fa-shopping-cart"></i>
+            </div>
+            <p>Your Cart is empty.</p>
+          </div>
+        </div>
+
+        <div class="cart-total" id="cartTotal">
+          <div class="total-price" id="totalPrice">Total : Rs. 0.00</div>
+          <button class="checkout-btn" onclick="showCheckout()">
+            Proceed to Checkout
+          </button>
+        </div>
+
+        <div class="checkout-form" id="checkoutForm">
+          <button class="back-to-cart" onclick="hideCheckout()">
+            <i class="fas fa-arrow-left"></i>
+            Back to Cart
+          </button>
+
+          <form onsubmit="processOrder(event)" autocomplete="off">
+            <div class="form-section">
+              <h4><i class="fas fa-box"></i> Shipping Information</h4>
+              <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" name="fullName" id="fullName" required />
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" required />
+              </div>
+
+              <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input
+                  type="tel"
+                  name="phone"
+                  id="phone"
+                  required
+                  placeholder="+91 12345 67890"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" name="address" id="address" required />
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="city">City</label>
+                  <input type="text" name="city" id="city" required />
+                </div>
+
+                <div class="form-group">
+                  <label for="zipCode">ZIP Code</label>
+                  <input type="text" name="zipCode" id="zipCode" required />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="country">Country</label>
+                <select name="country" id="country" required>
+                  <option value="">Select Country</option>
+                  <option value="IN">India</option>
+                  <option value="US">United States</option>
+                  <option value="UK">United Kingdom</option>
+                  <option value="CA">Canada</option>
+                  <option value="AU">Australia</option>
+                  <option value="DE">Germany</option>
+                  <option value="FR">France</option>
+                  <option value="IT">Italy</option>
+                  <option value="ES">Spain</option>
+                  <option value="NL">Netherlands</option>
+                  <option value="JP">Japan</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h4><i class="fas fa-credit-card"></i> Payment Information</h4>
+              <div class="payment-methods">
+                <div
+                  class="payment-method active"
+                  onclick="selectPayment('credit')"
+                >
+                  <i class="fas fa-credit-card"></i> Credit Card
+                </div>
+
+                <div class="payment-method" onclick="selectPayment('paypal')">
+                  <i class="fab fa-paypal"></i> PayPal
+                </div>
+
+                <div class="payment-method" onclick="selectPayment('apple')">
+                  <i class="fab fa-apple-pay"></i> Apple Pay
+                </div>
+              </div>
+
+              <div id="creditCardForm">
+                <div class="form-group">
+                  <label for="cardNumber">Card Number</label>
+                  <input
+                    type="text"
+                    name="cardNumber"
+                    id="cardNumber"
+                    placeholder="1234 5678 9012 3456"
+                    required
+                    inputmode="numeric"
+                  />
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="expiryDate">Expiry Date</label>
+                    <input
+                      type="text"
+                      name="expiryDate"
+                      id="expiryDate"
+                      placeholder="MM/YYYY"
+                      required
+                    />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="cvv">CVV</label>
+                    <input
+                      type="text"
+                      name="cvv"
+                      id="cvv"
+                      placeholder="123"
+                      maxlength="3"
+                      required
+                      inputmode="numeric"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="cardName">Name on Card</label>
+                  <input type="text" name="cardName" id="cardName" required />
+                </div>
+              </div>
+            </div>
+
+            <div class="total-price" id="checkoutTotal">Total : Rs. 0.00</div>
+            <button type="submit" class="place-order-btn">
+              <i class="fas fa-rocket"></i>Place Order
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-links">
+          <a href="privacy">Privacy policy</a>
+          <a href="terms">Terms of Services</a>
+          <a href="returns">Returns & exchanges</a>
+          <a href="shipping">Shipping Info</a>
+          <a href="support">Customer Support</a>
+        </div>
+        <p>&copy; 2025 Sanskar Fashion. All rights Reserved.</p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
